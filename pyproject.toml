@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-websearch-plugin"
+version = "0.1.0"
+description = "Local, authenticated browser search bridge for tool-using agents"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+authors = [{name = "wilson_deng"}]
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.27.2,<2"]
+
+[project.scripts]
+agent-websearch = "agent_websearch.cli:main"
+agent-websearch-mcp = "agent_websearch.mcp_server:main"
+
+[project.urls]
+Repository = "https://github.com/wilsondenq879/agent_websearch_plugin"
+Issues = "https://github.com/wilsondenq879/agent_websearch_plugin/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agent_websearch = ["extension/*.js", "extension/*.json", "extension/*.html", "extension/*.css"]
