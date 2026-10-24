@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "agent-websearch": {
+      "command": "agent-websearch-mcp",
+      "args": []
+    }
+  }
+}
