@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Websearch Bridge</title><link rel="stylesheet" href="popup.css"></head>
+<body><main>
+  <div class="eyebrow">AGENT WEBSEARCH · LOCAL BRIDGE</div>
+  <h1>Agent Websearch Bridge</h1>
+  <p class="intro">Browser search and public-page reading for local agents.</p>
+  <section class="status" aria-live="polite"><span id="dot" aria-hidden="true"></span><strong id="status">檢查連線中…</strong></section>
+  <p id="detail" class="detail"></p>
+  <label class="toggle"><span>暫停橋接</span><input id="paused" type="checkbox" role="switch"></label>
+  <button id="refresh" type="button">重新檢查連線</button>
+  <ul><li>僅操作工具自己建立的分頁</li><li>不讀取其他分頁、Cookie 或歷史</li><li>遇到驗證碼停止，交由你處理</li></ul>
+  <p class="note">Connect an agent through HTTP, CLI or MCP. Google is the browser search provider. No automatic third-party fallback is enabled by this extension.</p>
+</main><script src="runtime-config.js"></script><script src="popup.js"></script></body></html>
