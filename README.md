@@ -119,6 +119,31 @@ Tools: `browser_status`, `web_search`, `read_webpage`, `inspect_webpage`,
 No particular agent/model is advertised as automatically compatible without
 tool configuration. The stdio protocol is tested with the Python MCP SDK.
 
+### DeepSeek Harness Desktop
+
+DeepSeek Harness Desktop can use this bridge through its standard MCP client;
+it does **not** need DeepSeek native web search, a DeepSeek search account, or
+any search API key. Copy the entry in
+[examples/deepseek-harness.yaml](examples/deepseek-harness.yaml) into the
+Harness profile/composition that should have search access, then replace both
+absolute paths. The MCP command must point to this package's virtual
+environment executable, and `AGENT_WEBSEARCH_HOME` must name the same local
+state directory used by `agent-websearch serve` and the generated Edge
+extension.
+
+```sh
+python -m pip install -e '.[mcp]'
+agent-websearch serve
+```
+
+After Harness reloads its profile, the model sees
+`mcp__local_web__browser_status`, `mcp__local_web__web_search`,
+`mcp__local_web__read_webpage`, `mcp__local_web__inspect_webpage`,
+`mcp__local_web__image_search`, and `mcp__local_web__video_search`. Check
+`browser_status` first after starting a new desktop session. A `human_required`
+result means Google or a site needs the user's intervention; do not retry it by
+switching to a hidden API provider.
+
 ## Open WebUI adapter
 
 Install this package in the **same Python environment** as Open WebUI. Import
@@ -128,8 +153,8 @@ can access the local credential file, on the same machine as the broker.
 
 This optional adapter is not automatically installed and does not modify an
 existing Open WebUI runtime, model settings or search routing. Your application
-may implement a disclosed Tavily fallback above this bridge; the generic
-extension itself does not enable, bundle, or silently call a fallback service.
+may implement a disclosed fallback above this bridge; the generic extension
+itself does not enable, bundle, or silently call a fallback service.
 
 ## HTTP protocol
 

@@ -59,6 +59,29 @@ python -m pip install -e '.[mcp]'
 
 提供 `browser_status`、`web_search`、`read_webpage`、`inspect_webpage`、`image_search`、`video_search` 六個工具。
 
+### DeepSeek Harness Desktop（不用搜尋 API key）
+
+DeepSeek Harness Desktop 可透過標準 MCP 直接使用這個本機 bridge；不需要啟用
+DeepSeek 原生網路搜尋、不需要 DeepSeek 搜尋帳號，也不需要 Tavily、Google 或其他搜尋
+API key。將 [examples/deepseek-harness.yaml](examples/deepseek-harness.yaml)
+的 entry 加到應允許搜尋的 Harness profile／composition，並把兩個絕對路徑改成你的實際
+位置。
+
+`command` 必須指向此套件虛擬環境中的 `agent-websearch-mcp`；
+`AGENT_WEBSEARCH_HOME` 必須和 `agent-websearch serve`、以及 Edge 載入的產生 extension
+共用同一份本機 state directory。先安裝 MCP extra，並獨立啟動 broker：
+
+```sh
+python -m pip install -e '.[mcp]'
+agent-websearch serve
+```
+
+Harness reload profile 後，模型會看見 `mcp__local_web__browser_status`、
+`mcp__local_web__web_search`、`mcp__local_web__read_webpage`、
+`mcp__local_web__inspect_webpage`、`mcp__local_web__image_search`、
+`mcp__local_web__video_search`。新開桌面 session 時先用 `browser_status` 檢查連線；
+若回傳 `human_required`，代表 Google 或網站需要你接手，不能偷偷改用未揭露的 API 搜尋。
+
 ## 資料品質與限制
 
 - 搜尋預設最多 6 筆，不會為了湊數捏造結果。摘要不代表已閱讀來源，成功讀取頁面才有 `page_read: true`。

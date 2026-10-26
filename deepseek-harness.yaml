@@ -1,0 +1,25 @@
+# Add this entry to the DeepSeek Harness profile/composition that should be
+# allowed to search through this local Edge bridge. Replace both absolute paths
+# before enabling it. This is an MCP stdio child process, not a web service.
+#
+# Keep `agent-websearch serve` running separately and load the generated Edge
+# extension from the same AGENT_WEBSEARCH_HOME directory. No browser, Google,
+# Tavily or DeepSeek search API credential belongs in this configuration.
+- id: mcp-local-web
+  name: '@deepseek-ai/dsh-mcp-client'
+  config:
+    serverName: local_web
+    transport: stdio
+    command: /ABSOLUTE/PATH/TO/agent_websearch_plugin/.venv/bin/agent-websearch-mcp
+    args: []
+    env:
+      AGENT_WEBSEARCH_HOME: /ABSOLUTE/PATH/TO/.agent-websearch
+    # The browser bridge has a bounded 48-second job deadline. Give protocol
+    # startup and normal page loading a small margin without allowing an
+    # indefinitely stuck turn.
+    toolCallTimeoutMs: 55000
+    reconnect:
+      enabled: true
+      initialDelayMs: 500
+      maxDelayMs: 30000
+      maxAttempts: 10
